@@ -1,27 +1,27 @@
 require "rulers/version"
 require "rulers/routing"
 require "rulers/array"
-require 'pry-byebug'
+require "rulers/controller"
+require 'pry'
+# require 'pry-byebug'
 module Rulers
-  binding.pry
   class Application
-    binding.pry
     def call(env)
-      klass, act = get_controller_and_action(env)
-      controller = klass.new(env)
-      binding.pry
-      text = controller.send(act)
-      [200, {'Content-Type' => 'text/html'}, [text]]
+      if env['PATH_INFO'] == '/favicon.ico'
+        return [404, {'Content-Type'  => 'text/html'}, []]
+      end
+
+      if env['PATH_INFO'] == '/'
+        resp = Rack::Response.new
+        resp.redirect("http://127.0.0.1:3001/quotes/a_quote")
+        resp.finish
+      else
+        klass, act = get_controller_and_action(env)
+        controller = klass.new(env)
+          text = controller.send(act)
+        [200, {'Content-Type' => 'text/html'}, [text]]
+      end
     end
   end
 
-  class Controller
-    def  initialize(env)
-      @env = env
-    end
-
-    def  env
-      @env
-    end
-  end
 end
