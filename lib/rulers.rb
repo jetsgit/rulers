@@ -2,6 +2,8 @@ require "rulers/version"
 require "rulers/routing"
 require "rulers/array"
 require "rulers/controller"
+require "rulers/util"
+require "rulers/dependencies"
 require 'pry'
 # require 'pry-byebug'
 module Rulers
@@ -13,9 +15,9 @@ module Rulers
 
       if env['PATH_INFO'] == '/'
         binding.pry
-        # resp = Rack::Response.new
-        # resp.redirect("http://127.0.0.1:3001/quotes/a_quote")
-        # resp.finish
+        resp = Rack::Response.new
+        resp.redirect("http://127.0.0.1:3001/quotes/a_quote")
+        resp.finish
       else
         klass, act = get_controller_and_action(env)
         controller = klass.new(env)
