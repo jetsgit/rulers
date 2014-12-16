@@ -14,8 +14,11 @@ Gem::Specification.new do |gem|
   gem.name          = "rulers"
   gem.require_paths = ["lib"]
   gem.version       = Rulers::VERSION
+  gem.add_development_dependency "rake"
   gem.add_runtime_dependency "rack" 
   gem.add_runtime_dependency "erubis"
+  gem.add_runtime_dependency "multi_json"
+  gem.add_runtime_dependency "psych"
   gem.add_development_dependency "rack-test"
   gem.add_development_dependency "test-unit"
 end

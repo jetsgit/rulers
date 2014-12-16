@@ -4,11 +4,15 @@ require "rulers/array"
 require "rulers/controller"
 require "rulers/util"
 require "rulers/dependencies"
+require "rulers/file_model"
 require 'pry'
-# require 'pry-byebug'
+require 'pry-byebug'
 module Rulers
   class Application
     def call(env)
+      req = Rack::Request.new env
+      params = req.params["params"]
+        
       if env['PATH_INFO'] == '/favicon.ico'
         return [404, {'Content-Type'  => 'text/html'}, []]
       end
@@ -20,10 +24,9 @@ module Rulers
       else
         klass, act = get_controller_and_action(env)
         controller = klass.new(env)
-          text = controller.send(act)
+          text = controller.send(act, params)
         [200, {'Content-Type' => 'text/html'}, [text]]
       end
     end
   end
-
 end
