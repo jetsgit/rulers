@@ -14,7 +14,6 @@ module Rulers
       end
 
       if env['PATH_INFO'] == '/'
-        binding.pry
         resp = Rack::Response.new
         resp.redirect("http://127.0.0.1:3001/quotes/a_quote")
         resp.finish

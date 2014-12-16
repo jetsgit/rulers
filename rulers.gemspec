@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Rulers::VERSION
   gem.add_runtime_dependency "rack" 
+  gem.add_runtime_dependency "erubis"
   gem.add_development_dependency "rack-test"
   gem.add_development_dependency "test-unit"
 end
