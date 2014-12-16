@@ -12,9 +12,10 @@ module Rulers
       end
 
       if env['PATH_INFO'] == '/'
-        resp = Rack::Response.new
-        resp.redirect("http://127.0.0.1:3001/quotes/a_quote")
-        resp.finish
+        binding.pry
+        # resp = Rack::Response.new
+        # resp.redirect("http://127.0.0.1:3001/quotes/a_quote")
+        # resp.finish
       else
         klass, act = get_controller_and_action(env)
         controller = klass.new(env)
