@@ -6,16 +6,19 @@ module Rulers
     class FileModel
       def  initialize(filename)
         @filename = filename
-
         # If filename is "dir/37.json", @id is 37
         basename = File.split(filename)[-1]
         @id = File.basename(basename, ".json").to_i
         obj = File.read(filename)
-        @hash = MultiJson.load(obj)
+        @hash = MultiJson.load(obj) unless obj == ""
       end
 
       def  [] (name)
-        @hash[name.to_s]
+        if name
+          @hash[name.to_s]
+        else
+          @hash[""]
+        end
       end
 
       def  []=(name, value)
@@ -27,6 +30,19 @@ module Rulers
       rescue
         return nil
       end
+
+      def self.find_all_by_submitter(submitter)
+        files = Dir["db/quotes/*.json"]
+        quotes = files.map { |f| FileModel.new f unless f == nil }
+        quotes_by = []
+        quotes.each do |q|
+          if  q["submitter"] == submitter
+            quotes_by << q
+          end
+        end
+        quotes_by
+      end
+
       def  self.all
         files = Dir["db/quotes/*.json"]
         files.map { |f| FileModel.new f}
