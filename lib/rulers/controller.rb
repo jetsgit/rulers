@@ -26,5 +26,13 @@ module Rulers
       klass = klass.to_s.gsub( /Controller$/, "" )
       Rulers.to_underscore klass
     end
+
+    def request
+      @request ||= Rack::Request.new(@env)
+    end
+
+    def params
+      request.params 
+    end
   end
 end 

@@ -10,8 +10,6 @@ require 'pry-byebug'
 module Rulers
   class Application
     def call(env)
-      req = Rack::Request.new env
-      params = req.params["params"]
         
       if env['PATH_INFO'] == '/favicon.ico'
         return [404, {'Content-Type'  => 'text/html'}, []]
@@ -24,7 +22,7 @@ module Rulers
       else
         klass, act = get_controller_and_action(env)
         controller = klass.new(env)
-          text = controller.send(act, params)
+          text = controller.send(act)
         [200, {'Content-Type' => 'text/html'}, [text]]
       end
     end
