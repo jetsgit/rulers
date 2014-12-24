@@ -22,8 +22,13 @@ module Rulers
       else
         klass, act = get_controller_and_action(env)
         controller = klass.new(env)
-          text = controller.send(act)
-        [200, {'Content-Type' => 'text/html'}, [text]]
+        text = controller.send(act)
+        if controller.get_response
+          st, hd, rs = controller.get_response.to_a
+          [st, hd, [rs.body].flatten]
+        else
+          [200, {'Content-Type' => 'text/html'}, [text]]
+        end
       end
     end
   end
