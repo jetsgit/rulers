@@ -14,7 +14,7 @@ class TestApp < Rulers::Application
   end 
 end
 
-class RulersAppTest < Minitest::Test
+class RulersAppTest < Minitest::Unit::TestCase
   include Rack::Test::Methods 
 
   def  app
